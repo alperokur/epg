@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/player_api.php",
+      "destination": "/api/player_api.js"
+    },
+    {
+      "source": "/xmltv.php",
+      "destination": "/api/xmltv.js"
+    },
+    {
+      "source": "/:type(live|movie|series)/:username/:password/:streamId",
+      "destination": "/api/redirect.js"
+    },
+    {
+      "source": "/:username/:password/:streamId",
+      "destination": "/api/redirect.js"
+    }
+  ]
+}

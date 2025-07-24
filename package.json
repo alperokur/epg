@@ -1,0 +1,25 @@
+{
+  "name": "epg",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/alperokur/epg#readme",
+  "bugs": {
+    "url": "https://github.com/alperokur/epg/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alperokur/epg.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.35.1",
+    "@vercel/kv": "^3.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}

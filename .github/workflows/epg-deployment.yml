@@ -1,0 +1,74 @@
+name: EPG Updater and Deployer
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+    - cron: "0 12 * * *"
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-epg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup EPG Environment
+        run: |
+          git clone --depth 1 -b master https://github.com/iptv-org/epg.git
+          npm install --prefix ./epg
+          cp ./data/channels.xml ./epg/
+
+      - name: Grab EPG Data (Uncompressed)
+        run: |
+          (cd ./epg && npm run grab --- --channels=channels.xml --maxConnections=10)
+
+      - name: Prepare and Stage Artifacts
+        run: |
+          mkdir -p ./public
+
+          gzip -c epg/guide.xml > ./public/guide.xml.gz
+
+          FILENAME="guide.xml.gz"
+          FILE_PATH="./public/guide.xml.gz"
+          FILE_SIZE=$(du -h "$FILE_PATH" | cut -f1)
+          UPDATE_DATE=$(date -u --rfc-3339=seconds)
+
+          sed \
+            -e "s|__FILENAME__|${FILENAME}|g" \
+            -e "s|__FILE_SIZE__|${FILE_SIZE}|g" \
+            -e "s|__UPDATE_DATE__|${UPDATE_DATE}|g" \
+            "templates/index.html.template" > "public/index.html"
+
+      - name: Upload artifact for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy-pages:
+    needs: build-epg
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

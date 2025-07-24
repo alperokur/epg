@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPG Data Status</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f5f7; margin: 0; }
+        .container { background-color: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
+        h1 { color: #172b4d; }
+        ul { list-style-type: none; padding: 0; margin-top: 1.5rem; text-align: left; }
+        li { padding: 0.75rem; border-bottom: 1px solid #dfe1e6; }
+        li:last-child { border-bottom: none; }
+        strong { color: #42526e; }
+        a { color: #0052cc; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EPG Data Status</h1>
+        <ul>
+            <li><strong>File:</strong> <a href="./__FILENAME__" target="_blank">__FILENAME__</a></li>
+            <li><strong>Size:</strong> __FILE_SIZE__</li>
+            <li><strong>Last Updated (UTC):</strong> __UPDATE_DATE__</li>
+        </ul>
+    </div>
+</body>
+</html>
