@@ -112,11 +112,12 @@ module.exports = async (req, res) => {
             .json(await originalResponse.json());
         }
         let data = await originalResponse.json();
-        /*
-        data.server_info.url = req.headers.host;
-        data.server_info.port = "443";
-        data.server_info.server_protocol = "https";
-        */
+        if (data && data.server_info) {
+          data.server_info.url = req.headers.host;
+          data.server_info.port = "443";
+          data.server_info.server_protocol = "https";
+          data.server_info.https_port = "443";
+        }
         return res.status(200).json(data);
       }
 
