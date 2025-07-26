@@ -116,7 +116,6 @@ module.exports = async (req, res) => {
           data.server_info.url = req.headers.host;
           data.server_info.port = "443";
           data.server_info.server_protocol = "https";
-          data.server_info.https_port = "443";
         }
         return res.status(200).json(data);
       }
